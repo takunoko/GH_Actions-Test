@@ -5,7 +5,7 @@ on:
     branches:
       - public  # Set a branch name to trigger deployment
   schedule:
-    - cron: '* * * * *'
+    - cron: '*/5 * * * *'
 
 
 jobs:
