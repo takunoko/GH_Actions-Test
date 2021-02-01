@@ -1,12 +1,11 @@
 name: github pages
 
 on:
+  schedule:
+    - cron: '*/5 * * * *'
   push:
     branches:
       - public  # Set a branch name to trigger deployment
-  schedule:
-    - cron: '*/5 * * * *'
-
 
 jobs:
   deploy:
