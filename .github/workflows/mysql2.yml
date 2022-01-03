@@ -39,7 +39,8 @@ jobs:
 
       - name: show charset
         run: |
-          mysql -h 127.0.0.1 -protocol=tcp -uroot -proot db -e "show variables like '%char%';"
+          sleep 30
+          mysql -h 127.0.0.1 -protocol=tcp -uroot -proot -e "show variables like '%char%';"
 
       - name: show databases
         run: |
