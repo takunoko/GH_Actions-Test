@@ -1,9 +1,10 @@
 name: gh actions mysql test
 
-on:
-  push:
-    branches:
-      - mysql_test
+# 一旦こちらは保留のためトリガーをコメントアウト
+# on:
+#   push:
+#     branches:
+#       - mysql_test
 
 jobs:
   build:

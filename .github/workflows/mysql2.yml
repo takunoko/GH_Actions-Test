@@ -1,0 +1,62 @@
+name: gh actions mysql2 test
+
+on:
+  push:
+    branches:
+      - mysql_test
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    # services:
+    #   mysql:
+    #     image: mysql:5.7
+    #     ports:
+    #       - 3306:3306
+    #     env:
+    #       MYSQL_ROOT_PASSWORD: root
+    #       MYSQL_DATABASE: db
+    #       MYSQL_USER: db_user
+    #       MYSQL_PASSWORD: root
+    #       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+    #     options: --health-cmd "mysqladmin ping -hlocalhost" --health-interval 10s --health-timeout 10s --health-retries 10
+
+    steps:
+      - name: Setup mysql-action
+        uses: mirromutth/mysql-action@v1.1
+        with:
+          host port: 3306 # Optional, default value is 3306. The port of host
+          container port: 3306 # Optional, default value is 3306. The port of container
+          character set server: "utf8" # Optional, default value is 'utf8mb4'. The '--character-set-server' option for mysqld
+          collation server: "utf8_general_ci" # Optional, default value is 'utf8mb4_general_ci'. The '--collation-server' option for mysqld
+          mysql version: "5.7" # Optional, default value is "latest". The version of the MySQL
+          mysql database: "db" # Optional, default value is "". The specified database which will be create
+          mysql root password: "root" # Required if "mysql user" is empty, default is empty. The root superuser password
+
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: show charset
+        run: |
+          mysql -h 127.0.0.1 -protocol=tcp -uroot -proot db -e "show variables like '%char%';"
+
+      - name: show databases
+        run: |
+          mysql -h 127.0.0.1 -protocol=tcp -uroot -proot db -e "show databases;"
+
+      - name: show tables
+        run: |
+          mysql -h 127.0.0.1 -protocol=tcp -uroot -proot db -e "show tables;"
+
+      - name: create table
+        run: |
+          cat sql/create_table/*.sql | mysql -h 127.0.0.1 -protocol=tcp -uroot -proot db
+
+      - name: insert
+        run: |
+          cat sql/insert/*.sql | mysql -h 127.0.0.1 -protocol=tcp -uroot -proot db
+
+      - name: select
+        run: |
+          cat sql/select/*.sql | mysql -h 127.0.0.1 -protocol=tcp -uroot -proot db
