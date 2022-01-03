@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  db:
+    image: mysql:5.7
+    container_name: mysql_test
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: db
+      MYSQL_USER: db_user
+      MYSQL_PASSWORD: rooot
+      TZ: 'Asia/Tokyo'
+    volumes:
+      - ./mysql_data:/var/lib/mysql
+    ports:
+      - '3306:3306'

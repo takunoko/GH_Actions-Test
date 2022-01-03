@@ -1,0 +1,1 @@
+CREATE DATABASE db; -- DB自体を作る

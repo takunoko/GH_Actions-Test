@@ -1,0 +1,41 @@
+name: gh actions mysql test
+
+on:
+  push:
+    branches:
+      - mysql_test
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:5.7
+        volumes:
+          - mysqlconf.d:/etc/mysql/conf.d
+        ports:
+          - 3306:3306
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: db
+          MYSQL_USER: db_user
+          MYSQL_PASSWORD: root
+          MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+        options: --health-cmd "mysqladmin ping -hlocalhost" --health-interval 10s --health-timeout 10s --health-retries 10
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: create table
+        run: |
+          cat sql/create/*.sql | mysql -hlocalhost -protocol=tcp -udb_user -proot db
+
+      - name: insert
+        run: |
+          cat sql/insert/*.sql | mysql -hlocalhost -protocol=tcp -udb_user -proot db
+
+      - name: select
+        run: |
+          cat sql/select/*.sql | mysql -hlocalhost -protocol=tcp -udb_user -proot db
