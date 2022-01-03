@@ -30,12 +30,12 @@ jobs:
 
       - name: create table
         run: |
-          cat sql/create_table/*.sql | mysql -hlocalhost -protocol=tcp -udb_user -proot db
+          cat sql/create_table/*.sql | mysql -hlocalhost -protocol=tcp -uroot -proot db
 
       - name: insert
         run: |
-          cat sql/insert/*.sql | mysql -hlocalhost -protocol=tcp -udb_user -proot db
+          cat sql/insert/*.sql | mysql -hlocalhost -protocol=tcp -uroot -proot db
 
       - name: select
         run: |
-          cat sql/select/*.sql | mysql -hlocalhost -protocol=tcp -udb_user -proot db
+          cat sql/select/*.sql | mysql -hlocalhost -protocol=tcp -uroot -proot db
