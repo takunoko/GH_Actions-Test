@@ -30,7 +30,7 @@ jobs:
 
       - name: create table
         run: |
-          cat sql/create/*.sql | mysql -hlocalhost -protocol=tcp -udb_user -proot db
+          cat sql/create_table/*.sql | mysql -hlocalhost -protocol=tcp -udb_user -proot db
 
       - name: insert
         run: |
