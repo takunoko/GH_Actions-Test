@@ -28,20 +28,20 @@ jobs:
 
       - name: show databases
         run: |
-          mysql -hlocalhost -protocol=tcp -uroot -proot db -e "show databases;"
+          mysql -h 127.0.0.1 -protocol=tcp -uroot -proot db -e "show databases;"
 
       - name: show tables
         run: |
-          mysql -hlocalhost -protocol=tcp -uroot -proot db -e "show tables;"
+          mysql -h 127.0.0.1 -protocol=tcp -uroot -proot db -e "show tables;"
 
       - name: create table
         run: |
-          cat sql/create_table/*.sql | mysql -hlocalhost -protocol=tcp -uroot -proot db
+          cat sql/create_table/*.sql | mysql -h 127.0.0.1 -protocol=tcp -uroot -proot db
 
       - name: insert
         run: |
-          cat sql/insert/*.sql | mysql -hlocalhost -protocol=tcp -uroot -proot db
+          cat sql/insert/*.sql | mysql -h 127.0.0.1 -protocol=tcp -uroot -proot db
 
       - name: select
         run: |
-          cat sql/select/*.sql | mysql -hlocalhost -protocol=tcp -uroot -proot db
+          cat sql/select/*.sql | mysql -h 127.0.0.1 -protocol=tcp -uroot -proot db
